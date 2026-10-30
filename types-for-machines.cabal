@@ -1,0 +1,33 @@
+cabal-version:   3.0
+name:            types-for-machines
+version:         0.1.0.0
+synopsis:        Proof of concept: illegal states, laws, typed protocols and effects in Haskell types
+license:         MIT
+license-file:    LICENSE
+author:          Federico Sawady
+build-type:      Simple
+
+common comun
+  default-language: Haskell2010
+  ghc-options:      -Wall
+  build-depends:    base >=4.18 && <5
+
+library
+  import:          comun
+  hs-source-dirs:  src
+  exposed-modules: Net, Connection.Flags, Connection.States, Email, Door, Laws, Effects, Users
+  build-depends:   text
+
+executable demo
+  import:          comun
+  hs-source-dirs:  examples
+  main-is:         Main.hs
+  build-depends:   types-for-machines, text
+
+test-suite laws
+  import:          comun
+  type:            exitcode-stdio-1.0
+  hs-source-dirs:  test
+  main-is:         CheckLaws.hs
+  ghc-options:     -Wno-orphans
+  build-depends:   types-for-machines, QuickCheck >=2.14, containers
